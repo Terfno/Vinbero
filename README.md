@@ -1,6 +1,5 @@
 # Vinbero
-Implementation of SRv6 subset written in XDP
-
+Vinbero is a very fast high-performance SRv6 implementation
 // TODO: I want a nice logo....
 
 The goal of this project is to implement the basic functions of SRv6 so that users can enjoy network programming:)
@@ -10,12 +9,15 @@ This implementation is also very powerful because it is written in XDP.
 It does not require any special equipment like P4.
 All you need is the latest linux kernel to run it.
 It is also a very small implementation compared to VPP.
-It's easy to understand and easy to add functionality.It is also possible to incorporate these:)
+It's easy to understand and easy to add functionality.It is also possible to incorporate these:)(e.g. CNI, NOS...etc)
 
 Please raise issue with use case description if you want to any SRv6 functions not implemented yet or let's make a contribution!
 
 ## Required package
-TODO
+* linux: 5.8<=x
+  * It means that the version you are testing is 5.8 or higher. Actually, if BTF supports it, I think there is no problem.
+* golang: 1.3<=x
+* clang: 9<=x
 
 ## Setup
 ```
@@ -63,31 +65,9 @@ In the transit case, actionSrcAddr works as a so-called bsid.
 
 See this for details: [vinbero.yml.sample](./vinbero.yml.sample)
 
-
 ## Run
 ```
 ./bin/vinbero
-```
-
-## Tips
-### Print debug
-```
-sudo trace-cmd record -e 'xdp:*' -O trace_printk
-sudo trace-cmd report > trace.log
-```
-### Xdpcap
-Packets output at runtime can be saved in pcap.
-See https://github.com/cloudflare/xdpcap
-
-```
-sudo apt-get install libpcap-dev
-go get -u github.com/cloudflare/xdpcap/cmd/xdpcap
-
-# run on each nodes
-sudo mount bpffs /sys/fs/bpf -t bpf
-
-# capture packets
-xdpcap /sys/fs/bpf/xdpcap_hook "icmp"
 ```
 
 ## List of SRv6 functions of interest and status (a.k.a. Road Map)
@@ -129,13 +109,13 @@ xdpcap /sys/fs/bpf/xdpcap_hook "icmp"
 | End.B6.Encaps.Red | | |
 | End.BM | | |
 | End.S | | |
-| Args.Mob.Session | | Consider with End.MAP, End.DT and End.DX |
+| Args.Mob.Session | Done | Consider with End.MAP, End.DT and End.DX |
 | End.MAP | | |
 | End.M.GTP6.D | Jan, 2021 | GTP-U/IPv6 => SRv6, For implementation purposes, it is treated as transit　|
 | End.M.GTP6.D.Di | Jan, 2021 | GTP-U/IPv6 => SRv6, For implementation purposes, it is treated as transit |
 | End.M.GTP6.E | Jan, 2021 | SRv6 => GTP-U/IPv6 |
-| End.M.GTP4.E | partial Done | SRv6 => GTP-U/IPv4 |
-| H.M.GTP4.D | partial Done | GTP-U/IPv4 => SRv6, Currently, gtpv1ext hdr is not supported. Also, only subnets in multiples of 8 are supported. We're aiming for full implementation in the future.|
+| End.M.GTP4.E | partial Done | SRv6 => GTP-U/IPv4 gtpv1ext hdr is not supported. |
+| H.M.GTP4.D | partial Done | GTP-U/IPv4 => SRv6, Currently, gtpv1ext hdr is not supported. |
 | End.Limit | | Rate Limiting function |
 
 ### Non functional design items
@@ -157,3 +137,7 @@ I'm using these as a reference. thanks:)
 * [p4srv6](https://github.com/ebiken/p4srv6)
 * [linux/samples/bpf](https://github.com/torvalds/linux/tree/master/samples/bpf)
 * [VPP/srv6_mobile_plugin_doc](https://docs.fd.io/vpp/20.05/d7/d3c/srv6_mobile_plugin_doc.html)
+
+## Trivia
+The Vinbero is an Esperanto word meaning `grape`
+A meshed node running SRv6 looks like a grape when viewed from above:)
