@@ -471,13 +471,13 @@ __attribute__((__always_inline__)) static inline int rewrite_nexthop(struct xdp_
 
         if (xdp->ingress_ifindex == ifindex)
         {
-            bpf_printk("run tx");
+            // bpf_printk("run tx");
             return XDP_TX;
         }
-        bpf_printk("go to redirect");
+        // bpf_printk("go to redirect");
         return bpf_redirect_map(&tx_port, ifindex, 0);
     }
-    bpf_printk("failed rewrite nhop");
+    // bpf_printk("failed rewrite nhop");
     return XDP_PASS;
 }
 

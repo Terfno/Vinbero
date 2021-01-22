@@ -10,6 +10,8 @@ See https://github.com/cloudflare/xdpcap
 
 ```
 sudo apt-get install libpcap-dev
+# centos/fedora case
+# sudo yum install libpcap-devel
 go get -u github.com/cloudflare/xdpcap/cmd/xdpcap
 
 # run on each nodes

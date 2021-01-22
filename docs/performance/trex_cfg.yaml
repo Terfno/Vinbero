@@ -1,0 +1,19 @@
+- version: 2
+  interfaces: ['01:00.0', '01:00.1']
+  # port_info:
+  #     - ip: 10.1.0.1
+  #       default_gw: 10.2.0.1
+  #     - ip: 10.2.0.1
+  #       default_gw: 10.1.0.1
+  port_info:  # set eh mac addr
+      - dest_mac: [0x0c,0x42,0xa1,0x8e,0x8d,0xae] # router mac addr should be taken from DUT
+        src_mac: [0x0c,0x42,0xa1,0x8e,0x8d,0x26]   # source mac-addr - taken from ifconfig
+      - dest_mac: [0x0c,0x42,0xa1,0x8e,0x8d,0xaf] # router mac addr  taken from DUT
+        src_mac: [0x0c,0x42,0xa1,0x8e,0x8d,0x27]  #source mac-addr  taken from ifconfig
+  platform:
+      master_thread_id: 0
+      latency_thread_id: 15
+      dual_if:
+        - socket: 0
+          threads: [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+

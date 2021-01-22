@@ -406,6 +406,7 @@ action_end_m_gtp4_e(struct xdp_md *xdp, struct end_function *ef)
 SEC("xdp_prog")
 int srv6_handler(struct xdp_md *xdp)
 {
+    // bpf_printk("exec thou\n");
     void *data = (void *)(long)xdp->data;
     void *data_end = (void *)(long)xdp->data_end;
     struct ethhdr *eth = data;
@@ -422,6 +423,8 @@ int srv6_handler(struct xdp_md *xdp)
 
     if (!iph || !v6h)
         return xdpcap_exit(xdp, &xdpcap_hook, XDP_PASS);
+
+    // bpf_printk("first exit\n");
 
     h_proto = eth->h_proto;
     if (h_proto == bpf_htons(ETH_P_IP))
@@ -483,6 +486,7 @@ int srv6_handler(struct xdp_md *xdp)
             }
         }
     }
+    // bpf_printk("all thou\n");
     return xdpcap_exit(xdp, &xdpcap_hook, XDP_PASS);
 }
 

@@ -35,6 +35,14 @@ for i in rx tx tso ufo gso gro lro tx nocache copy sg txvlan rxvlan; do
 done
 ```
 
+use irqaffinity. this mellanox nic case.
+```
+git clone https://github.com/Mellanox/mlnx-tools.git
+cd mlnx-tools/
+./set_irq_affinity.sh ens4f0np0
+```
+
+
 ## Build
 ```
 cd include
